@@ -1,0 +1,22 @@
+{
+  "name": "letta-code-website",
+  "version": "1.0.0",
+  "description": "Letta Code 中文项目网站",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000",
+    "preview": "npx http-server -p 8000 -o"
+  },
+  "keywords": [
+    "letta",
+    "letta-code",
+    "ai",
+    "coding-assistant",
+    "documentation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letta Code - 记忆优先的编码 Agent 工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- 光晕效果 -->
+    <div class="glow-effect"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">Letta</span>
+                <span class="logo-accent">Code</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#intro" class="nav-link">简介</a></li>
+                <li><a href="#features" class="nav-link">核心功能</a></li>
+                <li><a href="#install" class="nav-link">安装</a></li>
+                <li><a href="#quickstart" class="nav-link">快速开始</a></li>
+                <li><a href="#commands" class="nav-link">命令参考</a></li>
+                <li><a href="#advanced" class="nav-link">高级用法</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" aria-label="切换主题">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <button class="mobile-menu-btn" aria-label="菜单">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>AI 驱动的编码助手</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="gradient-text">Letta Code</span>
+                </h1>
+                <p class="hero-subtitle">记忆优先（Memory-First）的编码 Agent 工具</p>
+                <p class="hero-description">
+                    基于 Letta API 构建的智能编码助手，能够跨会话、跨项目持续存在。
+                    它会记住你的偏好、项目架构以及历史交互，并随着时间的推移不断学习和改进。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#install" class="btn btn-primary">
+                        <span>立即安装</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#quickstart" class="btn btn-glass">
+                        <span>快速开始</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10 8 16 12 10 16 10 8"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="stat-label">持续记忆</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="24">0</div>
+                        <div class="stat-label">小时在线</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="999">0</div>
+                        <div class="stat-label">无限成长</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <div class="card-icon">🧠</div>
+                    <div class="card-text">Memory</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-text">Speed</div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-text">Precision</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 简介与核心理念 -->
+    <section id="intro" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">理念</span>
+                <h2 class="section-title">简介与核心理念</h2>
+                <p class="section-subtitle">为什么选择 Letta Code？</p>
+            </div>
+            
+            <div class="comparison">
+                <div class="comparison-card">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <h3>传统会话式工具</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>大多数 AI 编码工具是基于会话的，每次打开新窗口，AI 都是一张白纸。上下文仅限于当前对话历史 + AGENTS.md 等静态文件。</p>
+                        <div class="analogy">
+                            <div class="analogy-icon">👤</div>
+                            <strong>就像每次都雇用一个新的外包合同工。</strong>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="status-badge status-negative">❌ 无记忆</span>
+                        <span class="status-badge status-negative">❌ 无成长</span>
+                    </div>
+                </div>
+                
+                <div class="comparison-card featured">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <div class="card-icon">🧠</div>
+                        <h3>Letta Code</h3>
+                        <span class="featured-badge">推荐</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Letta Code 是基于 Agent 的，具有以下特点：</p>
+                        <ul>
+                            <li><strong>持久化：</strong>同一个 Agent 可以跨会话、跨天、跨月使用。</li>
+                            <li><strong>成长性：</strong>Agent 会将重要的上下文写入其长期记忆。</li>
+                            <li><strong>模型自由：</strong>可以随意切换底层模型，而不会丢失记忆。</li>
+                        </ul>
+                        <div class="analogy">
+                            <div class="analogy-icon">🤖</div>
+                            <strong>就像拥有一个能够不断学习、记住你习惯的长期合作伙伴或徒弟。</strong>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="status-badge status-positive">✅ 持久记忆</span>
+                        <span class="status-badge status-positive">✅ 持续成长</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心功能 -->
+    <section id="features" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">功能</span>
+                <h2 class="section-title">核心功能</h2>
+                <p class="section-subtitle">强大的功能，极致的体验</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">💾</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>持久化记忆</h3>
+                    <p>Letta Code 的核心是 Memory Blocks（记忆块）。Agent 拥有专门的存储区域来保存：</p>
+                    <ul>
+                        <li>User Persona: 关于用户的偏好</li>
+                        <li>Project Context: 项目的架构、依赖、构建方式</li>
+                    </ul>
+                    <p>使用 /clear 命令可以清空当前的对话缓冲区，但不会删除 Agent 的长期记忆。</p>
+                    <div class="code-block">
+                        <span class="code-prompt">$</span> <span class="command">/clear</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🔄</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>模型无关性</h3>
+                    <p>Letta Code 不绑定特定模型。你可以随时切换底层 LLM，而 Agent 的记忆和状态保持不变。</p>
+                    <div class="code-block">
+                        <span class="code-prompt">$</span> <span class="command">/model</span><br>
+                        <span class="code-prompt">$</span> <span class="command">/model</span> <span class="param">gpt-4o</span><br>
+                        <span class="code-prompt">$</span> <span class="command">/model</span> <span class="param">claude-3-5-sonnet</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">📚</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>技能学习</h3>
+                    <p>Agent 可以通过 .skills 目录加载 Python 编写的可重用技能函数。更重要的是，你可以让 Agent 从刚才的操作中学习新技能。</p>
+                    <div class="code-block">
+                        <span class="code-prompt">$</span> <span class="command">/skill</span> <span class="param">将刚才重构代码的逻辑保存为一个名为 "refactor_auth" 的技能</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon">🤖</div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>子 Agent</h3>
+                    <p>为了处理复杂任务，主 Agent 可以生成专门的"子 Agent"来并发处理工作：</p>
+                    <ul>
+                        <li><strong>explore:</strong> 专门用于只读搜索代码库，速度快</li>
+                        <li><strong>plan:</strong> 用于规划复杂任务</li>
+                        <li><strong>general-purpose:</strong> 具备完整能力的通用子 Agent</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 安装 -->
+    <section id="install" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">安装</span>
+                <h2 class="section-title">快速安装</h2>
+                <p class="section-subtitle">几分钟内开始使用</p>
+            </div>
+            
+            <div class="install-steps">
+                <div class="install-card">
+                    <div class="install-number">01</div>
+                    <div class="install-content">
+                        <h3>前置要求</h3>
+                        <ul>
+                            <li>
+                                <div class="check-icon">✓</div>
+                                <div>
+                                    <strong>Node.js:</strong> 版本 18 或更高
+                                </div>
+                            </li>
+                            <li>
+                                <div class="check-icon">✓</div>
+                                <div>
+                                    <strong>Letta 账号:</strong> 默认连接到 Letta Developer Platform (支持免费层级)
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="install-card">
+                    <div class="install-number">02</div>
+                    <div class="install-content">
+                        <h3>安装命令</h3>
+                        <p>使用 npm 全局安装：</p>
+                        <div class="code-block large">
+                            <span class="code-prompt">$</span> <span class="command">npm</span> <span class="param">install</span> <span class="param">-g</span> <span class="string">@letta-ai/letta-code</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('npm install -g @letta-ai/letta-code')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            复制
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速开始 -->
+    <section id="quickstart" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">开始</span>
+                <h2 class="section-title">快速开始</h2>
+                <p class="section-subtitle">三步上手，即刻体验</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>启动 Letta Code</h3>
+                            <span class="timeline-time">1 分钟</span>
+                        </div>
+                        <p>导航到你的项目目录并运行：</p>
+                        <div class="code-block">
+                            <span class="code-prompt">$</span> <span class="command">cd</span> <span class="param">your-project-directory</span><br>
+                            <span class="code-prompt">$</span> <span class="command">letta</span>
+                        </div>
+                        <p>如果是首次运行，系统会提示你通过浏览器进行 OAuth 登录。登录成功后，Letta Code 会自动为你创建一个针对当前目录的 Agent。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>初始化记忆 (/init)</h3>
+                            <span class="timeline-time">2 分钟</span>
+                        </div>
+                        <p>首次进入项目时，建议运行初始化命令。这会让 Agent 主动扫描项目结构、读取 README 和配置文件。</p>
+                        <div class="code-block">
+                            <span class="code-prompt">$</span> <span class="command">/init</span>
+                        </div>
+                        <p>Agent 会根据扫描结果更新其"核心记忆（Core Memory）"，记录项目概况和常用命令。</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>教导 Agent (/remember)</h3>
+                            <span class="timeline-time">30 秒</span>
+                        </div>
+                        <p>当 Agent 犯错或你需要告知它重要信息时，使用 /remember 命令将其写入长期记忆。</p>
+                        <div class="code-block">
+                            <span class="code-prompt">$</span> <span class="command">/remember</span> <span class="param">请在本项目中始终使用 pnpm 而不是 npm</span>
+                        </div>
+                        <p>下次会话中，Agent 依然会记得这条规则。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 命令参考手册 -->
+    <section id="commands" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">命令</span>
+                <h2 class="section-title">命令参考手册</h2>
+                <p class="section-subtitle">完整的命令列表与说明</p>
+            </div>
+            
+            <div class="commands-table-wrapper">
+                <table class="commands-table">
+                    <thead>
+                        <tr>
+                            <th>命令</th>
+                            <th>描述</th>
+                            <th>类别</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>/init</code></td>
+                            <td>初始化。扫描当前目录，建立项目认知的初始记忆。</td>
+                            <td><span class="category-badge category-init">初始化</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/remember [text]</code></td>
+                            <td>记忆。强制将指定文本写入 Agent 的长期核心记忆中。</td>
+                            <td><span class="category-badge category-memory">记忆</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/model</code></td>
+                            <td>切换模型。打开选择器切换 LLM (如 GPT-4, Claude 3.5)。</td>
+                            <td><span class="category-badge category-config">配置</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/toolset</code></td>
+                            <td>切换工具集。在不同的预设工具配置间切换 (如 default, codex)。</td>
+                            <td><span class="category-badge category-config">配置</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/clear</code></td>
+                            <td>清理上下文。清空当前对话历史，但保留长期记忆。</td>
+                            <td><span class="category-badge category-manage">管理</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/pin [name]</code></td>
+                            <td>置顶/保存。将当前 Agent 保存并命名，以便全局或其他项目复用。</td>
+                            <td><span class="category-badge category-manage">管理</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/unpin</code></td>
+                            <td>取消置顶。移除当前 Agent 的置顶状态。</td>
+                            <td><span class="category-badge category-manage">管理</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/pinned</code></td>
+                            <td>查看置顶。列出所有已保存的 Agent。</td>
+                            <td><span class="category-badge category-manage">管理</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/skill [instruction]</code></td>
+                            <td>学习技能。指示 Agent 根据当前上下文学习或创建新技能。</td>
+                            <td><span class="category-badge category-skill">技能</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>/exit</code> 或 <code>/quit</code></td>
+                            <td>退出 Letta Code。</td>
+                            <td><span class="category-badge category-system">系统</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 高级用法 -->
+    <section id="advanced" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">高级</span>
+                <h2 class="section-title">高级用法</h2>
+                <p class="section-subtitle">解锁更多强大功能</p>
+            </div>
+            
+            <div class="advanced-grid">
+                <div class="advanced-card">
+                    <div class="advanced-icon">⚙️</div>
+                    <h3>CLI 启动参数</h3>
+                    <p>在终端启动 letta 时可用的参数：</p>
+                    <div class="code-block">
+                        <span class="code-prompt">$</span> <span class="command">letta</span> <span class="param">[options]</span>
+                    </div>
+                    <table class="params-table">
+                        <thead>
+                            <tr>
+                                <th>参数</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--new</code></td>
+                                <td>强制创建一个新的 Agent</td>
+                            </tr>
+                            <tr>
+                                <td><code>--agent &lt;id&gt;</code></td>
+                                <td>连接到指定 ID 的现有 Agent</td>
+                            </tr>
+                            <tr>
+                                <td><code>--model &lt;model&gt;</code></td>
+                                <td>启动时指定使用的模型</td>
+                            </tr>
+                            <tr>
+                                <td><code>-p, --prompt &lt;text&gt;</code></td>
+                                <td>无头模式，非交互式运行</td>
+                            </tr>
+                            <tr>
+                                <td><code>--debug</code></td>
+                                <td>启用调试模式</td>
+                            </tr>
+                            <tr>
+                                <td><code>--version</code></td>
+                                <td>显示版本信息</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="advanced-card">
+                    <div class="advanced-icon">🚀</div>
+                    <h3>无头模式 (Headless Mode)</h3>
+                    <p>Letta Code 支持非交互式运行，非常适合集成到 CI/CD 管道或脚本中。</p>
+                    <div class="code-block">
+                        <span class="code-prompt">$</span> <span class="command">letta</span> <span class="param">-p</span> <span class="string">"Review the code in this directory and write a README.md"</span>
+                    </div>
+                    <p>你也可以结合 --yolo 参数（需谨慎），跳过工具执行的确认步骤，实现完全自动化。</p>
+                </div>
+                
+                <div class="advanced-card">
+                    <div class="advanced-icon">🔗</div>
+                    <h3>连接自托管服务器</h3>
+                    <p>默认情况下，Letta Code 连接到 Letta 官方云平台。如果你自己部署了 Letta Server，可以通过环境变量配置连接：</p>
+                    <div class="code-block">
+                        <span class="code-prompt">$</span> <span class="command">export</span> <span class="param">LETTA_BASE_URL</span>=<span class="string">"http://localhost:8283"</span><br>
+                        <span class="code-prompt">$</span> <span class="command">letta</span>
+                    </div>
+                </div>
+                
+                <div class="advanced-card">
+                    <div class="advanced-icon">⚙️</div>
+                    <h3>配置文件</h3>
+                    <p>Letta Code 会在项目根目录和用户主目录查找配置：</p>
+                    <ul>
+                        <li><code>.letta/settings.json</code>: 项目级配置（建议提交到 Git）</li>
+                        <li><code>.letta/settings.local.json</code>: 本地覆盖配置（建议加入 .gitignore）</li>
+                    </ul>
+                    <div class="code-block">
+                        {<br>
+                        &nbsp;&nbsp;"model": "claude-3-5-sonnet-20240620",<br>
+                        &nbsp;&nbsp;"contextWindow": 128000<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-text">Letta</span>
+                        <span class="logo-accent">Code</span>
+                    </div>
+                    <p>记忆优先的编码 Agent 工具</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-link-group">
+                        <h4>文档</h4>
+                        <a href="#intro">简介</a>
+                        <a href="#features">功能</a>
+                        <a href="#install">安装</a>
+                    </div>
+                    <div class="footer-link-group">
+                        <h4>资源</h4>
+                        <a href="https://docs.letta.com" target="_blank">官方文档</a>
+                        <a href="https://github.com/letta-ai" target="_blank">GitHub</a>
+                        <a href="https://discord.gg/letta" target="_blank">Discord</a>
+                    </div>
+                    <div class="footer-link-group">
+                        <h4>更多</h4>
+                        <a href="#quickstart">快速开始</a>
+                        <a href="#commands">命令参考</a>
+                        <a href="#advanced">高级用法</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letta Code. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" aria-label="回到顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
